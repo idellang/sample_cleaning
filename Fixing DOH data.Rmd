@@ -18,6 +18,7 @@ library(arsenal)
 library(data.table)
 library(tidyr)
 library(broom)
+library(knitr)
 ```
 
 
@@ -81,14 +82,16 @@ multiple_cases = june5 %>%
 
 june5 %>%
         filter(casenumber %in% multiple_cases) %>%
-        arrange(casenumber)
+        arrange(casenumber) %>%
+        head(15) %>%
+        kable()
 ```
 Focusing only on the demographics
 
-PH10519 is both female and male,
-PH11142 changed age
-PH12184 is both chinese and filipino
-PH2315 is both age 53 and 23
+- PH10519 is both female and male,
+- PH11142 changed age
+- PH12184 is both chinese and filipino
+- PH2315 is both age 53 and 23
 
 
 Try to check these casenumbers in june 7 data
@@ -99,7 +102,9 @@ june7 %>%
         distinct(casenumber, sex, age, nationality, .keep_all = F) %>%
         group_by(casenumber) %>%
         add_count() %>%
-        filter(n > 1)
+        filter(n > 1) %>%
+        head(15) %>%
+        kable()
 ```
 
 It seems that this was not updated in the june 7 data and looking at the demographics alone, there are a lot of inconsistencies.
@@ -119,7 +124,9 @@ Looks like the specimen date has the least missing data
 ```{r}
 june5 %>%
         select(contains('date')) %>%
-        arrange(mdy(specimen_date))
+        arrange(mdy(specimen_date)) %>%
+        head(15) %>%
+        kable()
 ```
 
 There are specimen dates that are way before 2020. There are also a lot of 1/1/2020 specimen date which I assume are entry errors. Im trying to look for ways to complete missing case numbers.
@@ -128,12 +135,14 @@ There are specimen dates that are way before 2020. There are also a lot of 1/1/2
 Check for june5 cases that were removed
 ```{r}
 june5 %>%
-        filter(!(casenumber %in% june6$casenumber))
+        filter(!(casenumber %in% june6$casenumber)) %>%
+        kable()
 ```
 
 ```{r}
 june5 %>%
-        filter(!(casenumber %in% june7$casenumber))
+        filter(!(casenumber %in% june7$casenumber)) %>%
+        kable()
 ```
 
 There were 3 cases that were in june 5 but not in june 6 and 4 cases that are in june 5 but not in june 7. If they are just updating. This shouldnt be removed.
@@ -191,12 +200,14 @@ changed_gender = june7 %>%
 
 june5 %>%
         filter(casenumber %in% changed_gender) %>%
-        arrange(casenumber)
+        arrange(casenumber) %>%
+        select(casenumber, age, sex, nationality)
 ```
 ```{r}
 june7 %>%
         filter(casenumber %in% changed_gender) %>%
-        arrange(casenumber)
+        arrange(casenumber) %>%
+        select(casenumber, age, sex, nationality)
 ```
 Either multiple entry or just changed gender.
 
@@ -260,7 +271,7 @@ june6 %>%
 Okay, some entries for the datespecimenreceivedbylaboratory were changed from unknown date format to NA
 
 
-Check date entries in June 7 that were not in june5
+Check entries in June 7 that were not in june5
 ```{r}
 june7 %>%
         anti_join(june5, by = c('casenumber' = 'casenumber')) %>%
@@ -279,7 +290,8 @@ Okay that's weird. There's a December 2020 case in June5 data
 
 ```{r}
 june5 %>%
-        filter(mdy(result_date) == '2020-12-05')
+        filter(mdy(result_date) == '2020-12-05') %>%
+        kable()
 ```
 
 This is probably May 12 2020
@@ -292,13 +304,16 @@ New entries for June 7
 ```{r}
 june7 %>%
         anti_join(june5, by = c('casenumber' = 'casenumber')) %>%
-        arrange(desc(parse_number(casenumber)))
+        arrange(desc(parse_number(casenumber))) %>%
+        select(casenumber, age, sex, nationality, healthstatus)
 ```
 There are 443 case numbers that are new on June 7
 
 ```{r}
 june5 %>%
-        arrange(desc(parse_number(casenumber)))
+        arrange(desc(parse_number(casenumber))) %>%
+        select(casenumber, age, sex, nationality, healthstatus) %>%
+        head(15)
 ```
 
 Im not sure how these new entries were gathered since the case number and dates or overlapping.
@@ -309,7 +324,8 @@ I saw one entry without a number in case number
 ```{r}
 june7 %>%
         filter(!is.na(casenumber)) %>%
-        filter(!(str_detect(casenumber,'[:digit:]')))
+        filter(!(str_detect(casenumber,'[:digit:]'))) %>%
+        kable()
 ```
 
 # Combine the data
@@ -319,7 +335,8 @@ There are a lot of inconsistencies in the data. Maybe just assume that the June 
 
 ```{r}
 june7 %>%
-        filter(is.na(casenumber))
+        filter(is.na(casenumber)) %>%
+        nrow(.)
 ```
 ~5.3k rows without data
 
@@ -367,13 +384,19 @@ june6 %>%
         arrange(percent_missing)
 ```
 
+
+
+
+
 ```{r}
 june5 %>%
-        anti_join(june7_combined, by = c('casenumber'))
+        anti_join(june7_combined, by = c('casenumber')) %>%
+        nrow(.)
 ```
 ```{r}
 june6 %>%
-        anti_join(june7_combined, by = c('casenumber'))
+        anti_join(june7_combined, by = c('casenumber')) %>%
+        nrow(.)
 ```
 
 Looking at case number alone, all data from June 5 and June6 were already at the june7 combined data
@@ -381,7 +404,9 @@ Looking at case number alone, all data from June 5 and June6 were already at the
 ```{r}
 june6 %>%
         anti_join(june7_combined) %>%
-        filter(is.na(casenumber))
+        filter(is.na(casenumber)) %>%
+        head(10) %>%
+        kable()
 ```
 However there are cases like this where there is no case number to anchor the search. It may be possible that these patients were already recorded and updated in the June7 Combined data
 
@@ -413,6 +438,19 @@ all_entries = bind_rows(june7_combined, assumed_june5_patients, assumed_june6_pa
 all_entries = all_entries %>%
         distinct()
 ```
+
+
+Check
+
+```{r}
+all_entries %>%
+        anti_join(june7_combined) %>%
+         map_dbl(function(x) sum(is.na(x)/ length(x))) %>%
+        as.data.frame() %>%
+        rename(percent_missing = '.') %>%
+        arrange(percent_missing)
+```
+Almost same percentage of missing data
 
 
 # Clean some data
@@ -482,9 +520,9 @@ all_entries %>%
 ```
 There are few typos in result date. Try to fix
 
-Remove the 1970 entry
-Change the last digit to 2020
-If the date is greater than August, use day-month-year format instead
+- Remove the 1970 entry
+- Change the last digit to 2020
+- If the date is greater than August, use day-month-year format instead
 ```{r}
 all_entries = all_entries %>%
         mutate(result_date = ifelse(mdy(result_date)< '2000-01-01',NA, result_date)) %>%

@@ -5,6 +5,7 @@ library(arsenal)
 library(data.table)
 library(tidyr)
 library(broom)
+library(knitr)
 ```
 
 # Explore the data
@@ -160,37 +161,35 @@ multiple_cases = june5 %>%
 
 june5 %>%
         filter(casenumber %in% multiple_cases) %>%
-        arrange(casenumber)
+        arrange(casenumber) %>%
+        head(15) %>%
+        kable()
 ```
 
-    ## # A tibble: 92 x 36
-    ##    casenumber   age sex   nationality healthstatus currentregion currentprovince
-    ##    <chr>      <dbl> <chr> <chr>       <chr>        <chr>         <chr>          
-    ##  1 PH10463       65 Fema~ Philippine~ Recovered    Northern Min~ Misamis Orient~
-    ##  2 PH10463       65 Fema~ Philippine~ Recovered    Northern Min~ Misamis Orient~
-    ##  3 PH10519       21 Fema~ 0           <NA>         National Cap~ <NA>           
-    ##  4 PH10519       21 Male  Philippine~ <NA>         National Cap~ NCR, Fourth Di~
-    ##  5 PH10574       52 Fema~ Philippine~ <NA>         National Cap~ <NA>           
-    ##  6 PH10574       52 Fema~ Philippine~ <NA>         National Cap~ NCR, Second Di~
-    ##  7 PH11142       27 Male  Philippine~ Recovered    CAR           Benguet        
-    ##  8 PH11142       26 Male  Philippine~ Recovered    CAR           Benguet        
-    ##  9 PH11622       46 Fema~ Philippine~ <NA>         National Cap~ NCR, Fourth Di~
-    ## 10 PH11622       46 Fema~ Philippine~ <NA>         <NA>          <NA>           
-    ## # ... with 82 more rows, and 29 more variables: currentmunicipalitycity <chr>,
-    ## #   regionpsgc <dbl>, provincepsgc <dbl>, municipalitycitypsgc <dbl>,
-    ## #   dru <chr>, region_dru <dbl>, otherreportingunit <chr>, confirminglab <chr>,
-    ## #   comorbidity <chr>, specifycomorbidity <chr>, fever <chr>, cough <chr>,
-    ## #   cold <chr>, sorethroat <chr>, difficultyofbreathing <chr>, diarrhea <chr>,
-    ## #   none <chr>, othersignssymptomsspecify <chr>, onset_date <chr>,
-    ## #   admitted_date <chr>, specimen_date <chr>,
-    ## #   datespecimenreceivedbylaboratory <chr>, result_date <chr>,
-    ## #   discharged_date <chr>, recovered_date <chr>, died_date <chr>,
-    ## #   quarantined <chr>, drucity <lgl>, druprovince <lgl>
+| casenumber | age | sex    | nationality          | healthstatus | currentregion           | currentprovince                                      | currentmunicipalitycity       | regionpsgc | provincepsgc | municipalitycitypsgc | dru                                           | region_dru | otherreportingunit      | confirminglab                            | comorbidity | specifycomorbidity     | fever | cough | cold | sorethroat | difficultyofbreathing | diarrhea | none | othersignssymptomsspecify                | onset_date | admitted_date | specimen_date | datespecimenreceivedbylaboratory | result_date | discharged_date | recovered_date | died_date | quarantined | drucity | druprovince |
+|:-----------|----:|:-------|:---------------------|:-------------|:------------------------|:-----------------------------------------------------|:------------------------------|-----------:|-------------:|---------------------:|:----------------------------------------------|-----------:|:------------------------|:-----------------------------------------|:------------|:-----------------------|:------|:------|:-----|:-----------|:----------------------|:---------|:-----|:-----------------------------------------|:-----------|:--------------|:--------------|:---------------------------------|:------------|:----------------|:---------------|:----------|:------------|:--------|:------------|
+| PH10463    |  65 | Female | Philippine, Filipino | Recovered    | Northern Mindanao       | Misamis Oriental                                     | Cagayan de oro city (capital) |         10 |         1043 |               104305 | OTHER REPORTING UNIT                          |         NA | CHO-CAGAYAN DE ORO CITY | SOUTHERN PHILIPPINES MEDICAL CENTER      | NA          | NA                     | NA    | yes   | NA   | NA         | NA                    | NA       | NA   | NA                                       | NA         | NA            | 4/30/2020     | 5/2/2020                         | 5/4/2020    | NA              | 5/21/2020      | NA        | Yes         | NA      | NA          |
+| PH10463    |  65 | Female | Philippine, Filipino | Recovered    | Northern Mindanao       | Misamis Oriental                                     | Cagayan de oro city (capital) |         10 |         1043 |               104305 | NA                                            |         NA | NA                      | NA                                       | NA          | NA                     | NA    | yes   | NA   | NA         | NA                    | NA       | NA   | NA                                       | 4/30/2020  | NA            | 4/30/2020     | 5/5/2020                         | 5/4/2020    | NA              | 5/21/2020      | NA        | Yes         | NA      | NA          |
+| PH10519    |  21 | Female | 0                    | NA           | National Capital Region | NA                                                   | NA                            |         13 |           NA |                   NA | CAPITOL MEDICAL CENTER, INC.                  |         13 | NA                      | CHINESE GENERAL HOSPITAL                 | NA          | NA                     | yes   | NA    | NA   | NA         | NA                    | yes      | NA   | NA                                       | NA         | 5/5/2020      | 5/6/2020      | 5/6/2020                         | 5/7/2020    | 5/10/2020       | NA             | NA        | NA          | NA      | NA          |
+| PH10519    |  21 | Male   | Philippine, Filipino | NA           | National Capital Region | NCR, Fourth District (not a province)                | City of las piÃ±as            |         13 |         1376 |                   NA | NA                                            |         NA | NA                      | RESEARCH INSTITUTE FOR TROPICAL MEDICINE | NA          | NA                     | NA    | NA    | NA   | NA         | NA                    | NA       | NA   | NA                                       | NA         | 5/4/2020      | 5/6/2020      | 5/6/2020                         | NA          | 5/7/2020        | NA             | NA        | Yes         | NA      | NA          |
+| PH10574    |  52 | Female | Philippine, Filipino | NA           | National Capital Region | NA                                                   | NA                            |         13 |           NA |                   NA | OTHER REPORTING UNIT                          |         NA | PASIG CESU              | THE MEDICAL CITY - ORTIGAS               | NA          | NA                     | NA    | NA    | NA   | NA         | NA                    | NA       | NA   | NA                                       | NA         | NA            | 5/1/2020      | 5/4/2020                         | 5/6/2020    | NA              | NA             | NA        | NA          | NA      | NA          |
+| PH10574    |  52 | Female | Philippine, Filipino | NA           | National Capital Region | NCR, Second District (not a province)                | City of pasig                 |         13 |         1374 |               137403 | PASIG CITY CHILDREN’S HOSPITAL - CHILD’S HOPE |         NA | NA                      | THE MEDICAL CITY - ORTIGAS               | No          | NA                     | NA    | NA    | NA   | yes        | NA                    | NA       | NA   | NONE                                     | 5/7/2020   | NA            | 5/20/2020     | 5/21/2020                        | 5/23/2020   | NA              | NA             | NA        | NA          | NA      | NA          |
+| PH11142    |  27 | Male   | Philippine, Filipino | Recovered    | CAR                     | Benguet                                              | La trinidad (capital)         |         14 |         1411 |               141110 | BAGUIO GENERAL HOSPITAL AND MEDICAL CENTER    |         14 | NA                      | BAGUIO GENERAL HOSPITAL MEDICAL CENTER   | No          | NA                     | NA    | yes   | NA   | NA         | NA                    | NA       | NA   | HEADACHE                                 | 4/26/2020  | 5/2/2020      | 5/3/2020      | 5/3/2020                         | 5/11/2020   | NA              | NA             | NA        | Yes         | NA      | NA          |
+| PH11142    |  26 | Male   | Philippine, Filipino | Recovered    | CAR                     | Benguet                                              | Baguio city                   |         14 |         1411 |               141102 | NA                                            |         NA | NA                      | NA                                       | No          | NA                     | NA    | yes   | NA   | NA         | NA                    | NA       | NA   | NA                                       | NA         | NA            | 5/3/2020      | 5/3/2020                         | 5/7/2020    | NA              | 5/28/2020      | NA        | NA          | NA      | NA          |
+| PH11622    |  46 | Female | Philippine, Filipino | NA           | National Capital Region | NCR, Fourth District (not a province)                | NA                            |         13 |         1376 |                   NA | OTHER REPORTING UNIT                          |         NA | BUCOR                   | RESEARCH INSTITUTE FOR TROPICAL MEDICINE | NA          | NA                     | NA    | NA    | NA   | NA         | NA                    | NA       | NA   | NA                                       | NA         | NA            | 5/7/2020      | NA                               | 5/14/2020   | NA              | NA             | NA        | NA          | NA      | NA          |
+| PH11622    |  46 | Female | Philippine, Filipino | NA           | NA                      | NA                                                   | NA                            |         NA |           NA |                   NA | UNIVERSITY OF SANTO TOMAS HOSPITAL            |         13 | NA                      | NA                                       | NA          | NA                     | NA    | yes   | NA   | NA         | NA                    | NA       | NA   | NA                                       | 5/15/2020  | NA            | 5/21/2020     | NA                               | 5/23/2020   | NA              | NA             | NA        | NA          | NA      | NA          |
+| PH11954    |  46 | Male   | Philippine, Filipino | NA           | National Capital Region | NCR, Fourth District (not a province)                | City of paraÃ±aque            |         13 |         1376 |                   NA | OTHER REPORTING UNIT                          |         NA | PHILIPPINE RED CROSS    | PHILIPPINE RED CROSS - PLMC              | NA          | NA                     | NA    | NA    | NA   | NA         | NA                    | NA       | NA   | NA                                       | NA         | NA            | 5/5/2020      | NA                               | NA          | NA              | NA             | NA        | NA          | NA      | NA          |
+| PH11954    |  46 | Male   | Philippine, Filipino | NA           | National Capital Region | NCR, Fourth District (not a province)                | City of paraÃ±aque            |         13 |         1376 |                   NA | NA                                            |         NA | NA                      | PHILIPPINES RED CROSS                    | NA          | NA                     | NA    | NA    | NA   | NA         | NA                    | NA       | yes  | NA                                       | NA         | NA            | 5/5/2020      | 5/5/2020                         | 5/5/2020    | NA              | NA             | NA        | Yes         | NA      | NA          |
+| PH11972    |  71 | Male   | Philippine, Filipino | NA           | National Capital Region | NCR, City of Manila, First District (not a province) | San nicolas                   |         13 |         1339 |               133904 | metropolitan medical center                   |         13 | NA                      | CHINESE GENERAL HOSPITAL                 | NA          | NA                     | NA    | NA    | NA   | NA         | NA                    | NA       | NA   | general body weakness , loss of appetite | 5/3/2020   | 5/10/2020     | 5/23/2020     | 5/23/2020                        | 5/23/2020   | NA              | NA             | NA        | NA          | NA      | NA          |
+| PH11972    |  72 | Male   | Philippine, Filipino | NA           | National Capital Region | NA                                                   | NA                            |         13 |           NA |                   NA | METROPOLITAN MEDICAL CENTER                   |         13 | NA                      | UP NATIONAL INSTITUTES OF HEALTH         | NA          | ISCHEMIC HEART DISEASE | NA    | yes   | NA   | NA         | NA                    | NA       | NA   | general body weakness and poor appetite  | 5/8/2020   | 5/10/2020     | NA            | NA                               | NA          | NA              | NA             | NA        | NA          | NA      | NA          |
+| PH12116    |  56 | Male   | Philippine, Filipino | NA           | National Capital Region | NCR, Fourth District (not a province)                | City of parañaque             |         13 |         1376 |                   NA | SUN VALLEY HEALTH CENTER                      |         13 | NA                      | RESEARCH INSTITUTE FOR TROPICAL MEDICINE | NA          | NA                     | NA    | NA    | NA   | NA         | NA                    | NA       | NA   | NA                                       | NA         | NA            | 5/12/2020     | NA                               | 5/15/2020   | NA              | NA             | NA        | Yes         | NA      | NA          |
 
 Focusing only on the demographics
 
-PH10519 is both female and male, PH11142 changed age PH12184 is both
-chinese and filipino PH2315 is both age 53 and 23
+-   PH10519 is both female and male,
+-   PH11142 changed age
+-   PH12184 is both chinese and filipino
+-   PH2315 is both age 53 and 23
 
 Try to check these casenumbers in june 7 data
 
@@ -201,24 +200,28 @@ june7 %>%
         distinct(casenumber, sex, age, nationality, .keep_all = F) %>%
         group_by(casenumber) %>%
         add_count() %>%
-        filter(n > 1)
+        filter(n > 1) %>%
+        head(15) %>%
+        kable()
 ```
 
-    ## # A tibble: 52 x 5
-    ## # Groups:   casenumber [26]
-    ##    casenumber   age sex    nationality              n
-    ##    <chr>      <dbl> <chr>  <chr>                <int>
-    ##  1 PH10519       21 Female 0                        2
-    ##  2 PH10519       21 Male   Philippine, Filipino     2
-    ##  3 PH11142       27 Male   Philippine, Filipino     2
-    ##  4 PH11142       26 Male   Philippine, Filipino     2
-    ##  5 PH11972       71 Male   Philippine, Filipino     2
-    ##  6 PH11972       72 Male   Philippine, Filipino     2
-    ##  7 PH12184       46 Male   Philippine, Filipino     2
-    ##  8 PH12184       46 Male   Chinese                  2
-    ##  9 PH12512       69 Male   0                        2
-    ## 10 PH12512       64 Male   Philippine, Filipino     2
-    ## # ... with 42 more rows
+| casenumber | age | sex    | nationality          |   n |
+|:-----------|----:|:-------|:---------------------|----:|
+| PH10519    |  21 | Female | 0                    |   2 |
+| PH10519    |  21 | Male   | Philippine, Filipino |   2 |
+| PH11142    |  27 | Male   | Philippine, Filipino |   2 |
+| PH11142    |  26 | Male   | Philippine, Filipino |   2 |
+| PH11972    |  71 | Male   | Philippine, Filipino |   2 |
+| PH11972    |  72 | Male   | Philippine, Filipino |   2 |
+| PH12184    |  46 | Male   | Philippine, Filipino |   2 |
+| PH12184    |  46 | Male   | Chinese              |   2 |
+| PH12512    |  69 | Male   | 0                    |   2 |
+| PH12512    |  64 | Male   | Philippine, Filipino |   2 |
+| PH12619    |  28 | Male   | 0                    |   2 |
+| PH12619    |  28 | Male   | Philippine, Filipino |   2 |
+| PH12799    |  26 | Male   | Philippine, Filipino |   2 |
+| PH12799    |  25 | Male   | 0                    |   2 |
+| PH13795    |  81 | Female | Philippine, Filipino |   2 |
 
 It seems that this was not updated in the june 7 data and looking at the
 demographics alone, there are a lot of inconsistencies.
@@ -241,24 +244,28 @@ Looks like the specimen date has the least missing data
 ``` r
 june5 %>%
         select(contains('date')) %>%
-        arrange(mdy(specimen_date))
+        arrange(mdy(specimen_date)) %>%
+        head(15) %>%
+        kable()
 ```
 
-    ## # A tibble: 21,241 x 8
-    ##    onset_date admitted_date specimen_date datespecimenrec~ result_date
-    ##    <chr>      <chr>         <chr>         <chr>            <chr>      
-    ##  1 <NA>       <NA>          1/1/1900      <NA>             <NA>       
-    ##  2 <NA>       <NA>          2/3/1957      5/29/2020        5/30/2020  
-    ##  3 <NA>       <NA>          12/25/1970    <NA>             4/21/2020  
-    ##  4 <NA>       <NA>          4/7/1971      <NA>             5/1/2020   
-    ##  5 <NA>       <NA>          8/14/1982     5/18/2020        5/19/2020  
-    ##  6 <NA>       <NA>          8/8/1986      <NA>             5/21/2020  
-    ##  7 <NA>       <NA>          5/26/2002     5/27/2020        5/28/2020  
-    ##  8 <NA>       <NA>          5/14/2010     5/16/2020        5/20/2020  
-    ##  9 <NA>       <NA>          1/1/2011      <NA>             5/17/2020  
-    ## 10 <NA>       <NA>          12/31/2019    5/21/2020        5/21/2020  
-    ## # ... with 21,231 more rows, and 3 more variables: discharged_date <chr>,
-    ## #   recovered_date <chr>, died_date <chr>
+| onset_date | admitted_date | specimen_date | datespecimenreceivedbylaboratory | result_date | discharged_date | recovered_date | died_date |
+|:-----------|:--------------|:--------------|:---------------------------------|:------------|:----------------|:---------------|:----------|
+| NA         | NA            | 1/1/1900      | NA                               | NA          | NA              | NA             | NA        |
+| NA         | NA            | 2/3/1957      | 5/29/2020                        | 5/30/2020   | NA              | NA             | NA        |
+| NA         | NA            | 12/25/1970    | NA                               | 4/21/2020   | NA              | NA             | NA        |
+| NA         | NA            | 4/7/1971      | NA                               | 5/1/2020    | NA              | NA             | NA        |
+| NA         | NA            | 8/14/1982     | 5/18/2020                        | 5/19/2020   | NA              | NA             | NA        |
+| NA         | NA            | 8/8/1986      | NA                               | 5/21/2020   | NA              | NA             | NA        |
+| NA         | NA            | 5/26/2002     | 5/27/2020                        | 5/28/2020   | NA              | NA             | NA        |
+| NA         | NA            | 5/14/2010     | 5/16/2020                        | 5/20/2020   | NA              | NA             | NA        |
+| NA         | NA            | 1/1/2011      | NA                               | 5/17/2020   | NA              | NA             | NA        |
+| NA         | NA            | 12/31/2019    | 5/21/2020                        | 5/21/2020   | NA              | NA             | NA        |
+| NA         | 4/24/2020     | 1/1/2020      | NA                               | 4/27/2020   | NA              | NA             | NA        |
+| NA         | 4/29/2020     | 1/1/2020      | NA                               | 5/20/2020   | NA              | NA             | NA        |
+| NA         | 4/27/2020     | 1/1/2020      | 4/4/2020                         | 4/6/2020    | NA              | NA             | NA        |
+| NA         | NA            | 1/1/2020      | NA                               | 5/5/2020    | NA              | NA             | NA        |
+| NA         | NA            | 1/1/2020      | NA                               | 5/20/2020   | NA              | NA             | NA        |
 
 There are specimen dates that are way before 2020. There are also a lot
 of 1/1/2020 specimen date which I assume are entry errors. Im trying to
@@ -268,48 +275,28 @@ Check for june5 cases that were removed
 
 ``` r
 june5 %>%
-        filter(!(casenumber %in% june6$casenumber))
+        filter(!(casenumber %in% june6$casenumber)) %>%
+        kable()
 ```
 
-    ## # A tibble: 3 x 36
-    ##   casenumber   age sex   nationality healthstatus currentregion currentprovince
-    ##   <chr>      <dbl> <chr> <chr>       <chr>        <chr>         <chr>          
-    ## 1 PH162         72 Male  Philippine~ Recovered    National Cap~ NCR, Second Di~
-    ## 2 PH706         74 Male  Philippine~ Recovered    National Cap~ NCR, Second Di~
-    ## 3 PH7540        40 Fema~ Philippine~ Mild         National Cap~ NCR, Second Di~
-    ## # ... with 29 more variables: currentmunicipalitycity <chr>, regionpsgc <dbl>,
-    ## #   provincepsgc <dbl>, municipalitycitypsgc <dbl>, dru <chr>,
-    ## #   region_dru <dbl>, otherreportingunit <chr>, confirminglab <chr>,
-    ## #   comorbidity <chr>, specifycomorbidity <chr>, fever <chr>, cough <chr>,
-    ## #   cold <chr>, sorethroat <chr>, difficultyofbreathing <chr>, diarrhea <chr>,
-    ## #   none <chr>, othersignssymptomsspecify <chr>, onset_date <chr>,
-    ## #   admitted_date <chr>, specimen_date <chr>,
-    ## #   datespecimenreceivedbylaboratory <chr>, result_date <chr>,
-    ## #   discharged_date <chr>, recovered_date <chr>, died_date <chr>,
-    ## #   quarantined <chr>, drucity <lgl>, druprovince <lgl>
+| casenumber | age | sex    | nationality          | healthstatus | currentregion           | currentprovince                       | currentmunicipalitycity | regionpsgc | provincepsgc | municipalitycitypsgc | dru                            | region_dru | otherreportingunit | confirminglab                            | comorbidity | specifycomorbidity          | fever | cough | cold | sorethroat | difficultyofbreathing | diarrhea | none | othersignssymptomsspecify | onset_date | admitted_date | specimen_date | datespecimenreceivedbylaboratory | result_date | discharged_date | recovered_date | died_date | quarantined | drucity | druprovince |
+|:-----------|----:|:-------|:---------------------|:-------------|:------------------------|:--------------------------------------|:------------------------|-----------:|-------------:|---------------------:|:-------------------------------|-----------:|:-------------------|:-----------------------------------------|:------------|:----------------------------|:------|:------|:-----|:-----------|:----------------------|:---------|:-----|:--------------------------|:-----------|:--------------|:--------------|:---------------------------------|:------------|:----------------|:---------------|:----------|:------------|:--------|:------------|
+| PH162      |  72 | Male   | Philippine, Filipino | Recovered    | National Capital Region | NCR, Second District (not a province) | Quezon city             |         13 |         1374 |               137404 | DILIMAN DOCTORS HOSPITAL, INC. |         13 | NA                 | RESEARCH INSTITUTE FOR TROPICAL MEDICINE | NA          | BENIGN PROSTATIC HYPERLASIA | yes   | yes   | yes  | NA         | NA                    | NA       | NA   | LOSS OF APPETITE          | 3/11/2020  | 3/11/2020     | 3/12/2020     | NA                               | 3/16/2020   | 4/5/2020        | 4/5/2020       | NA        | NA          | NA      | NA          |
+| PH706      |  74 | Male   | Philippine, Filipino | Recovered    | National Capital Region | NCR, Second District (not a province) | Quezon city             |         13 |         1374 |               137404 | DILIMAN DOCTORS HOSPITAL, INC. |         13 | NA                 | RESEARCH INSTITUTE FOR TROPICAL MEDICINE | Yes         | NA                          | yes   | yes   | yes  | yes        | NA                    | NA       | NA   | NA                        | 3/12/2020  | 3/16/2020     | 3/16/2020     | NA                               | 3/25/2020   | NA              | NA             | NA        | NA          | NA      | NA          |
+| PH7540     |  40 | Female | Philippine, Filipino | Mild         | National Capital Region | NCR, Second District (not a province) | City of pasig           |         13 |         1374 |               137403 | PASIG CITY GENERAL HOSPITAL    |         13 | NA                 | RESEARCH INSTITUTE FOR TROPICAL MEDICINE | NA          | NA                          | NA    | NA    | NA   | NA         | NA                    | NA       | yes  | NA                        | 4/13/2020  | 4/16/2020     | 4/16/2020     | NA                               | 4/25/2020   | NA              | NA             | NA        | NA          | NA      | NA          |
 
 ``` r
 june5 %>%
-        filter(!(casenumber %in% june7$casenumber))
+        filter(!(casenumber %in% june7$casenumber)) %>%
+        kable()
 ```
 
-    ## # A tibble: 4 x 36
-    ##   casenumber   age sex   nationality healthstatus currentregion currentprovince
-    ##   <chr>      <dbl> <chr> <chr>       <chr>        <chr>         <chr>          
-    ## 1 PH162         72 Male  Philippine~ Recovered    National Cap~ NCR, Second Di~
-    ## 2 PH706         74 Male  Philippine~ Recovered    National Cap~ NCR, Second Di~
-    ## 3 PH7540        40 Fema~ Philippine~ Mild         National Cap~ NCR, Second Di~
-    ## 4 PH8806        32 Fema~ Philippine~ Asymptomatic National Cap~ NCR, City of M~
-    ## # ... with 29 more variables: currentmunicipalitycity <chr>, regionpsgc <dbl>,
-    ## #   provincepsgc <dbl>, municipalitycitypsgc <dbl>, dru <chr>,
-    ## #   region_dru <dbl>, otherreportingunit <chr>, confirminglab <chr>,
-    ## #   comorbidity <chr>, specifycomorbidity <chr>, fever <chr>, cough <chr>,
-    ## #   cold <chr>, sorethroat <chr>, difficultyofbreathing <chr>, diarrhea <chr>,
-    ## #   none <chr>, othersignssymptomsspecify <chr>, onset_date <chr>,
-    ## #   admitted_date <chr>, specimen_date <chr>,
-    ## #   datespecimenreceivedbylaboratory <chr>, result_date <chr>,
-    ## #   discharged_date <chr>, recovered_date <chr>, died_date <chr>,
-    ## #   quarantined <chr>, drucity <lgl>, druprovince <lgl>
+| casenumber | age | sex    | nationality          | healthstatus | currentregion           | currentprovince                                      | currentmunicipalitycity | regionpsgc | provincepsgc | municipalitycitypsgc | dru                                          | region_dru | otherreportingunit | confirminglab                            | comorbidity | specifycomorbidity          | fever | cough | cold | sorethroat | difficultyofbreathing | diarrhea | none | othersignssymptomsspecify | onset_date | admitted_date | specimen_date | datespecimenreceivedbylaboratory | result_date | discharged_date | recovered_date | died_date | quarantined | drucity | druprovince |
+|:-----------|----:|:-------|:---------------------|:-------------|:------------------------|:-----------------------------------------------------|:------------------------|-----------:|-------------:|---------------------:|:---------------------------------------------|-----------:|:-------------------|:-----------------------------------------|:------------|:----------------------------|:------|:------|:-----|:-----------|:----------------------|:---------|:-----|:--------------------------|:-----------|:--------------|:--------------|:---------------------------------|:------------|:----------------|:---------------|:----------|:------------|:--------|:------------|
+| PH162      |  72 | Male   | Philippine, Filipino | Recovered    | National Capital Region | NCR, Second District (not a province)                | Quezon city             |         13 |         1374 |               137404 | DILIMAN DOCTORS HOSPITAL, INC.               |         13 | NA                 | RESEARCH INSTITUTE FOR TROPICAL MEDICINE | NA          | BENIGN PROSTATIC HYPERLASIA | yes   | yes   | yes  | NA         | NA                    | NA       | NA   | LOSS OF APPETITE          | 3/11/2020  | 3/11/2020     | 3/12/2020     | NA                               | 3/16/2020   | 4/5/2020        | 4/5/2020       | NA        | NA          | NA      | NA          |
+| PH706      |  74 | Male   | Philippine, Filipino | Recovered    | National Capital Region | NCR, Second District (not a province)                | Quezon city             |         13 |         1374 |               137404 | DILIMAN DOCTORS HOSPITAL, INC.               |         13 | NA                 | RESEARCH INSTITUTE FOR TROPICAL MEDICINE | Yes         | NA                          | yes   | yes   | yes  | yes        | NA                    | NA       | NA   | NA                        | 3/12/2020  | 3/16/2020     | 3/16/2020     | NA                               | 3/25/2020   | NA              | NA             | NA        | NA          | NA      | NA          |
+| PH7540     |  40 | Female | Philippine, Filipino | Mild         | National Capital Region | NCR, Second District (not a province)                | City of pasig           |         13 |         1374 |               137403 | PASIG CITY GENERAL HOSPITAL                  |         13 | NA                 | RESEARCH INSTITUTE FOR TROPICAL MEDICINE | NA          | NA                          | NA    | NA    | NA   | NA         | NA                    | NA       | yes  | NA                        | 4/13/2020  | 4/16/2020     | 4/16/2020     | NA                               | 4/25/2020   | NA              | NA             | NA        | NA          | NA      | NA          |
+| PH8806     |  32 | Female | Philippine, Filipino | Asymptomatic | National Capital Region | NCR, City of Manila, First District (not a province) | Tondo i / ii            |         13 |         1339 |               133901 | GAT ANDRES BONIFACIO MEMORIAL MEDICAL CENTER |         13 | NA                 | UP NATIONAL INSTITUTES OF HEALTH         | NA          | NA                          | yes   | yes   | NA   | yes        | NA                    | NA       | NA   | NA                        | 4/14/2020  | 5/1/2020      | 4/17/2020     | NA                               | 4/28/2020   | NA              | NA             | NA        | NA          | NA      | NA          |
 
 There were 3 cases that were in june 5 but not in june 6 and 4 cases
 that are in june 5 but not in june 7. If they are just updating. This
@@ -408,60 +395,42 @@ changed_gender = june7 %>%
 
 june5 %>%
         filter(casenumber %in% changed_gender) %>%
-        arrange(casenumber)
+        arrange(casenumber) %>%
+        select(casenumber, age, sex, nationality)
 ```
 
-    ## # A tibble: 9 x 36
-    ##   casenumber   age sex   nationality healthstatus currentregion currentprovince
-    ##   <chr>      <dbl> <chr> <chr>       <chr>        <chr>         <chr>          
-    ## 1 PH10519       21 Fema~ 0           <NA>         National Cap~ <NA>           
-    ## 2 PH10519       21 Male  Philippine~ <NA>         National Cap~ NCR, Fourth Di~
-    ## 3 PH13004       27 Male  Philippine~ <NA>         National Cap~ NCR, Second Di~
-    ## 4 PH14063       18 Male  Philippine~ Mild         CaLaBaRZon    Batangas       
-    ## 5 PH16088       22 Fema~ Philippine~ <NA>         <NA>          <NA>           
-    ## 6 PH16449       35 Male  Philippine~ <NA>         CaLaBaRZon    Batangas       
-    ## 7 PH16489       11 Male  Philippine~ <NA>         CaLaBaRZon    Batangas       
-    ## 8 PH5953        34 Fema~ Philippine~ Asymptomatic CaLaBaRZon    Cavite         
-    ## 9 PH5953        35 Male  Philippine~ Asymptomatic CaLaBaRZon    Cavite         
-    ## # ... with 29 more variables: currentmunicipalitycity <chr>, regionpsgc <dbl>,
-    ## #   provincepsgc <dbl>, municipalitycitypsgc <dbl>, dru <chr>,
-    ## #   region_dru <dbl>, otherreportingunit <chr>, confirminglab <chr>,
-    ## #   comorbidity <chr>, specifycomorbidity <chr>, fever <chr>, cough <chr>,
-    ## #   cold <chr>, sorethroat <chr>, difficultyofbreathing <chr>, diarrhea <chr>,
-    ## #   none <chr>, othersignssymptomsspecify <chr>, onset_date <chr>,
-    ## #   admitted_date <chr>, specimen_date <chr>,
-    ## #   datespecimenreceivedbylaboratory <chr>, result_date <chr>,
-    ## #   discharged_date <chr>, recovered_date <chr>, died_date <chr>,
-    ## #   quarantined <chr>, drucity <lgl>, druprovince <lgl>
+    ## # A tibble: 9 x 4
+    ##   casenumber   age sex    nationality         
+    ##   <chr>      <dbl> <chr>  <chr>               
+    ## 1 PH10519       21 Female 0                   
+    ## 2 PH10519       21 Male   Philippine, Filipino
+    ## 3 PH13004       27 Male   Philippine, Filipino
+    ## 4 PH14063       18 Male   Philippine, Filipino
+    ## 5 PH16088       22 Female Philippine, Filipino
+    ## 6 PH16449       35 Male   Philippine, Filipino
+    ## 7 PH16489       11 Male   Philippine, Filipino
+    ## 8 PH5953        34 Female Philippine, Filipino
+    ## 9 PH5953        35 Male   Philippine, Filipino
 
 ``` r
 june7 %>%
         filter(casenumber %in% changed_gender) %>%
-        arrange(casenumber)
+        arrange(casenumber) %>%
+        select(casenumber, age, sex, nationality)
 ```
 
-    ## # A tibble: 9 x 36
-    ##   casenumber   age sex   nationality healthstatus currentregion currentprovince
-    ##   <chr>      <dbl> <chr> <chr>       <chr>        <chr>         <chr>          
-    ## 1 PH10519       21 Fema~ 0           <NA>         National Cap~ <NA>           
-    ## 2 PH10519       21 Male  Philippine~ <NA>         National Cap~ NCR, Fourth Di~
-    ## 3 PH13004       27 Fema~ Philippine~ <NA>         National Cap~ NCR, City of M~
-    ## 4 PH14063       18 Fema~ Philippine~ Mild         CaLaBaRZon    Batangas       
-    ## 5 PH16088       18 Male  Philippine~ <NA>         Cagayan Vall~ Isabela        
-    ## 6 PH16449       35 Fema~ Philippine~ <NA>         CaLaBaRZon    Batangas       
-    ## 7 PH16489       11 Fema~ Philippine~ <NA>         CaLaBaRZon    Batangas       
-    ## 8 PH5953        34 Fema~ Philippine~ Asymptomatic CaLaBaRZon    Cavite         
-    ## 9 PH5953        35 Male  Philippine~ Asymptomatic CaLaBaRZon    Cavite         
-    ## # ... with 29 more variables: currentmunicipalitycity <chr>, regionpsgc <dbl>,
-    ## #   provincepsgc <dbl>, municipalitycitypsgc <dbl>, dru <chr>,
-    ## #   region_dru <dbl>, drucity <chr>, druprovince <chr>,
-    ## #   otherreportingunit <chr>, confirminglab <chr>, comorbidity <chr>,
-    ## #   specifycomorbidity <chr>, fever <chr>, cough <chr>, cold <chr>,
-    ## #   sorethroat <chr>, difficultyofbreathing <chr>, diarrhea <chr>, none <chr>,
-    ## #   othersignssymptomsspecify <chr>, onset_date <chr>, admitted_date <chr>,
-    ## #   specimen_date <chr>, datespecimenreceivedbylaboratory <chr>,
-    ## #   result_date <chr>, discharged_date <chr>, recovered_date <chr>,
-    ## #   died_date <chr>, quarantined <chr>
+    ## # A tibble: 9 x 4
+    ##   casenumber   age sex    nationality         
+    ##   <chr>      <dbl> <chr>  <chr>               
+    ## 1 PH10519       21 Female 0                   
+    ## 2 PH10519       21 Male   Philippine, Filipino
+    ## 3 PH13004       27 Female Philippine, Filipino
+    ## 4 PH14063       18 Female Philippine, Filipino
+    ## 5 PH16088       18 Male   Philippine, Filipino
+    ## 6 PH16449       35 Female Philippine, Filipino
+    ## 7 PH16489       11 Female Philippine, Filipino
+    ## 8 PH5953        34 Female Philippine, Filipino
+    ## 9 PH5953        35 Male   Philippine, Filipino
 
 Either multiple entry or just changed gender.
 
@@ -578,7 +547,7 @@ june6 %>%
 Okay, some entries for the datespecimenreceivedbylaboratory were changed
 from unknown date format to NA
 
-Check date entries in June 7 that were not in june5
+Check entries in June 7 that were not in june5
 
 ``` r
 june7 %>%
@@ -607,25 +576,15 @@ Okay that’s weird. There’s a December 2020 case in June5 data
 
 ``` r
 june5 %>%
-        filter(mdy(result_date) == '2020-12-05')
+        filter(mdy(result_date) == '2020-12-05') %>%
+        kable()
 ```
 
-    ## # A tibble: 3 x 36
-    ##   casenumber   age sex   nationality healthstatus currentregion currentprovince
-    ##   <chr>      <dbl> <chr> <chr>       <chr>        <chr>         <chr>          
-    ## 1 PH16632       23 Fema~ Philippine~ <NA>         <NA>          <NA>           
-    ## 2 PH16633       30 Male  Philippine~ <NA>         <NA>          <NA>           
-    ## 3 PH16634       28 Male  Philippine~ <NA>         <NA>          <NA>           
-    ## # ... with 29 more variables: currentmunicipalitycity <chr>, regionpsgc <dbl>,
-    ## #   provincepsgc <dbl>, municipalitycitypsgc <dbl>, dru <chr>,
-    ## #   region_dru <dbl>, otherreportingunit <chr>, confirminglab <chr>,
-    ## #   comorbidity <chr>, specifycomorbidity <chr>, fever <chr>, cough <chr>,
-    ## #   cold <chr>, sorethroat <chr>, difficultyofbreathing <chr>, diarrhea <chr>,
-    ## #   none <chr>, othersignssymptomsspecify <chr>, onset_date <chr>,
-    ## #   admitted_date <chr>, specimen_date <chr>,
-    ## #   datespecimenreceivedbylaboratory <chr>, result_date <chr>,
-    ## #   discharged_date <chr>, recovered_date <chr>, died_date <chr>,
-    ## #   quarantined <chr>, drucity <lgl>, druprovince <lgl>
+| casenumber | age | sex    | nationality          | healthstatus | currentregion | currentprovince | currentmunicipalitycity | regionpsgc | provincepsgc | municipalitycitypsgc | dru            | region_dru | otherreportingunit | confirminglab         | comorbidity | specifycomorbidity | fever | cough | cold | sorethroat | difficultyofbreathing | diarrhea | none | othersignssymptomsspecify | onset_date | admitted_date | specimen_date | datespecimenreceivedbylaboratory | result_date | discharged_date | recovered_date | died_date | quarantined | drucity | druprovince |
+|:-----------|----:|:-------|:---------------------|:-------------|:--------------|:----------------|:------------------------|-----------:|-------------:|---------------------:|:---------------|-----------:|:-------------------|:----------------------|:------------|:-------------------|:------|:------|:-----|:-----------|:----------------------|:---------|:-----|:--------------------------|:-----------|:--------------|:--------------|:---------------------------------|:------------|:----------------|:---------------|:----------|:------------|:--------|:------------|
+| PH16632    |  23 | Female | Philippine, Filipino | NA           | NA            | NA              | NA                      |         NA |           NA |                   NA | PCG/PRC        |         NA | NA                 | PHILIPPINES RED CROSS | NA          | NA                 | NA    | NA    | NA   | NA         | NA                    | NA       | NA   | NA                        | NA         | NA            | NA            | NA                               | 12/5/2020   | NA              | NA             | NA        | NA          | NA      | NA          |
+| PH16633    |  30 | Male   | Philippine, Filipino | NA           | NA            | NA              | NA                      |         NA |           NA |                   NA | SOGO MONUMENTO |         NA | NA                 | PHILIPPINES RED CROSS | NA          | NA                 | NA    | NA    | NA   | NA         | NA                    | NA       | NA   | NA                        | NA         | NA            | NA            | NA                               | 12/5/2020   | NA              | NA             | NA        | Yes         | NA      | NA          |
+| PH16634    |  28 | Male   | Philippine, Filipino | NA           | NA            | NA              | NA                      |         NA |           NA |                   NA | SOGO MONUMENTO |         NA | NA                 | PHILIPPINES RED CROSS | NA          | NA                 | NA    | NA    | NA   | NA         | NA                    | NA       | NA   | NA                        | NA         | NA            | 11/5/2020     | NA                               | 12/5/2020   | NA              | NA             | NA        | NA          | NA      | NA          |
 
 This is probably May 12 2020
 
@@ -641,63 +600,52 @@ New entries for June 7
 ``` r
 june7 %>%
         anti_join(june5, by = c('casenumber' = 'casenumber')) %>%
-        arrange(desc(parse_number(casenumber)))
+        arrange(desc(parse_number(casenumber))) %>%
+        select(casenumber, age, sex, nationality, healthstatus)
 ```
 
-    ## # A tibble: 443 x 36
-    ##    casenumber   age sex   nationality healthstatus currentregion currentprovince
-    ##    <chr>      <dbl> <chr> <chr>       <chr>        <chr>         <chr>          
-    ##  1 PH20215       47 Male  Philippine~ <NA>         National Cap~ NCR, Second Di~
-    ##  2 PH20072       14 Male  Philippine~ <NA>         National Cap~ NCR, City of M~
-    ##  3 PH20061       44 Fema~ Philippine~ <NA>         National Cap~ NCR, City of M~
-    ##  4 PH20042       46 Fema~ Philippine~ <NA>         National Cap~ NCR, Third Dis~
-    ##  5 PH19748       30 Male  Philippine~ <NA>         Central Visa~ Cebu           
-    ##  6 PH19746       59 Male  Philippine~ Mild         National Cap~ NCR, Third Dis~
-    ##  7 PH19745       10 Fema~ Philippine~ <NA>         Central Visa~ Cebu           
-    ##  8 PH19744       14 Male  Philippine~ <NA>         Central Visa~ Cebu           
-    ##  9 PH19743        4 Fema~ Philippine~ <NA>         Central Visa~ Cebu           
-    ## 10 PH19742       39 Male  Philippine~ <NA>         Central Visa~ Cebu           
-    ## # ... with 433 more rows, and 29 more variables: currentmunicipalitycity <chr>,
-    ## #   regionpsgc <dbl>, provincepsgc <dbl>, municipalitycitypsgc <dbl>,
-    ## #   dru <chr>, region_dru <dbl>, drucity <chr>, druprovince <chr>,
-    ## #   otherreportingunit <chr>, confirminglab <chr>, comorbidity <chr>,
-    ## #   specifycomorbidity <chr>, fever <chr>, cough <chr>, cold <chr>,
-    ## #   sorethroat <chr>, difficultyofbreathing <chr>, diarrhea <chr>, none <chr>,
-    ## #   othersignssymptomsspecify <chr>, onset_date <chr>, admitted_date <chr>,
-    ## #   specimen_date <chr>, datespecimenreceivedbylaboratory <chr>,
-    ## #   result_date <chr>, discharged_date <chr>, recovered_date <chr>,
-    ## #   died_date <chr>, quarantined <chr>
+    ## # A tibble: 443 x 5
+    ##    casenumber   age sex    nationality          healthstatus
+    ##    <chr>      <dbl> <chr>  <chr>                <chr>       
+    ##  1 PH20215       47 Male   Philippine, Filipino <NA>        
+    ##  2 PH20072       14 Male   Philippine, Filipino <NA>        
+    ##  3 PH20061       44 Female Philippine, Filipino <NA>        
+    ##  4 PH20042       46 Female Philippine, Filipino <NA>        
+    ##  5 PH19748       30 Male   Philippine, Filipino <NA>        
+    ##  6 PH19746       59 Male   Philippine, Filipino Mild        
+    ##  7 PH19745       10 Female Philippine, Filipino <NA>        
+    ##  8 PH19744       14 Male   Philippine, Filipino <NA>        
+    ##  9 PH19743        4 Female Philippine, Filipino <NA>        
+    ## 10 PH19742       39 Male   Philippine, Filipino <NA>        
+    ## # ... with 433 more rows
 
 There are 443 case numbers that are new on June 7
 
 ``` r
 june5 %>%
-        arrange(desc(parse_number(casenumber)))
+        arrange(desc(parse_number(casenumber))) %>%
+        select(casenumber, age, sex, nationality, healthstatus) %>%
+        head(15)
 ```
 
-    ## # A tibble: 21,241 x 36
-    ##    casenumber   age sex   nationality healthstatus currentregion currentprovince
-    ##    <chr>      <dbl> <chr> <chr>       <chr>        <chr>         <chr>          
-    ##  1 PH204263      30 Fema~ Philippine~ <NA>         National Cap~ NCR, Fourth Di~
-    ##  2 PH204262      29 Fema~ Philippine~ <NA>         National Cap~ NCR, City of M~
-    ##  3 PH19681       59 Fema~ Philippine~ Mild         Northern Min~ Misamis Orient~
-    ##  4 PH18588       34 Fema~ Philippine~ <NA>         National Cap~ NCR, Second Di~
-    ##  5 PH17883       41 Fema~ Philippine~ <NA>         National Cap~ NCR, Second Di~
-    ##  6 PH17224       37 Male  Philippine~ <NA>         Zamboanga Pe~ Zamboanga del ~
-    ##  7 PH17223       82 Male  Philippine~ Mild         National Cap~ NCR, Fourth Di~
-    ##  8 PH17222       35 Fema~ Philippine~ Recovered    National Cap~ NCR, Second Di~
-    ##  9 PH17220       55 Male  Philippine~ <NA>         National Cap~ NCR, City of M~
-    ## 10 PH17218       58 Fema~ Philippine~ <NA>         National Cap~ NCR, Second Di~
-    ## # ... with 21,231 more rows, and 29 more variables:
-    ## #   currentmunicipalitycity <chr>, regionpsgc <dbl>, provincepsgc <dbl>,
-    ## #   municipalitycitypsgc <dbl>, dru <chr>, region_dru <dbl>,
-    ## #   otherreportingunit <chr>, confirminglab <chr>, comorbidity <chr>,
-    ## #   specifycomorbidity <chr>, fever <chr>, cough <chr>, cold <chr>,
-    ## #   sorethroat <chr>, difficultyofbreathing <chr>, diarrhea <chr>, none <chr>,
-    ## #   othersignssymptomsspecify <chr>, onset_date <chr>, admitted_date <chr>,
-    ## #   specimen_date <chr>, datespecimenreceivedbylaboratory <chr>,
-    ## #   result_date <chr>, discharged_date <chr>, recovered_date <chr>,
-    ## #   died_date <chr>, quarantined <chr>, drucity <lgl>, druprovince <lgl>
+    ## # A tibble: 15 x 5
+    ##    casenumber   age sex    nationality          healthstatus
+    ##    <chr>      <dbl> <chr>  <chr>                <chr>       
+    ##  1 PH204263      30 Female Philippine, Filipino <NA>        
+    ##  2 PH204262      29 Female Philippine, Filipino <NA>        
+    ##  3 PH19681       59 Female Philippine, Filipino Mild        
+    ##  4 PH18588       34 Female Philippine, Filipino <NA>        
+    ##  5 PH17883       41 Female Philippine, Filipino <NA>        
+    ##  6 PH17224       37 Male   Philippine, Filipino <NA>        
+    ##  7 PH17223       82 Male   Philippine, Filipino Mild        
+    ##  8 PH17222       35 Female Philippine, Filipino Recovered   
+    ##  9 PH17220       55 Male   Philippine, Filipino <NA>        
+    ## 10 PH17218       58 Female Philippine, Filipino <NA>        
+    ## 11 PH17217       55 Male   Philippine, Filipino <NA>        
+    ## 12 PH17216       29 Male   Philippine, Filipino <NA>        
+    ## 13 PH17215       29 Female Philippine, Filipino <NA>        
+    ## 14 PH17214       27 Female Philippine, Filipino <NA>        
+    ## 15 PH17213       33 Male   Philippine, Filipino <NA>
 
 Im not sure how these new entries were gathered since the case number
 and dates or overlapping.
@@ -707,23 +655,13 @@ I saw one entry without a number in case number
 ``` r
 june7 %>%
         filter(!is.na(casenumber)) %>%
-        filter(!(str_detect(casenumber,'[:digit:]')))
+        filter(!(str_detect(casenumber,'[:digit:]'))) %>%
+        kable()
 ```
 
-    ## # A tibble: 1 x 36
-    ##   casenumber   age sex   nationality healthstatus currentregion currentprovince
-    ##   <chr>      <dbl> <chr> <chr>       <chr>        <chr>         <chr>          
-    ## 1 PH            21 Male  Philippine~ Mild         Soccsksargen  South Cotabato 
-    ## # ... with 29 more variables: currentmunicipalitycity <chr>, regionpsgc <dbl>,
-    ## #   provincepsgc <dbl>, municipalitycitypsgc <dbl>, dru <chr>,
-    ## #   region_dru <dbl>, drucity <chr>, druprovince <chr>,
-    ## #   otherreportingunit <chr>, confirminglab <chr>, comorbidity <chr>,
-    ## #   specifycomorbidity <chr>, fever <chr>, cough <chr>, cold <chr>,
-    ## #   sorethroat <chr>, difficultyofbreathing <chr>, diarrhea <chr>, none <chr>,
-    ## #   othersignssymptomsspecify <chr>, onset_date <chr>, admitted_date <chr>,
-    ## #   specimen_date <chr>, datespecimenreceivedbylaboratory <chr>,
-    ## #   result_date <chr>, discharged_date <chr>, recovered_date <chr>,
-    ## #   died_date <chr>, quarantined <chr>
+| casenumber | age | sex  | nationality          | healthstatus | currentregion | currentprovince | currentmunicipalitycity         | regionpsgc | provincepsgc | municipalitycitypsgc | dru                          | region_dru | drucity   | druprovince    | otherreportingunit | confirminglab | comorbidity | specifycomorbidity | fever | cough | cold | sorethroat | difficultyofbreathing | diarrhea | none | othersignssymptomsspecify | onset_date | admitted_date | specimen_date | datespecimenreceivedbylaboratory | result_date | discharged_date | recovered_date | died_date | quarantined |
+|:-----------|----:|:-----|:---------------------|:-------------|:--------------|:----------------|:--------------------------------|-----------:|-------------:|---------------------:|:-----------------------------|-----------:|:----------|:---------------|:-------------------|:--------------|:------------|:-------------------|:------|:------|:-----|:-----------|:----------------------|:---------|:-----|:--------------------------|:-----------|:--------------|:--------------|:---------------------------------|:------------|:----------------|:---------------|:----------|:------------|
+| PH         |  21 | Male | Philippine, Filipino | Mild         | Soccsksargen  | South Cotabato  | General santos city (dadiangas) |         12 |         1263 |               126303 | DR. JORGE P. ROYECA HOSPITAL |         12 | Esperanza | Sultan Kudarat | NA                 | Others        | No          | NA                 | NA    | NA    | yes  | NA         | NA                    | NA       | NA   | LOSS OF APPETITE          | 5/30/2020  | 6/2/2020      | 6/2/2020      | 6/4/2020                         | 6/5/2020    | NA              | NA             | NA        | NA          |
 
 # Combine the data
 
@@ -740,33 +678,11 @@ data. Then clean the data after.
 
 ``` r
 june7 %>%
-        filter(is.na(casenumber))
+        filter(is.na(casenumber)) %>%
+        nrow(.)
 ```
 
-    ## # A tibble: 5,274 x 36
-    ##    casenumber   age sex   nationality healthstatus currentregion currentprovince
-    ##    <chr>      <dbl> <chr> <chr>       <chr>        <chr>         <chr>          
-    ##  1 <NA>          46 Fema~ Philippine~ <NA>         Unknown       <NA>           
-    ##  2 <NA>          40 Male  Philippine~ <NA>         <NA>          <NA>           
-    ##  3 <NA>          39 Fema~ Philippine~ <NA>         <NA>          <NA>           
-    ##  4 <NA>          29 Male  Philippine~ <NA>         <NA>          <NA>           
-    ##  5 <NA>          58 Male  Philippine~ <NA>         <NA>          <NA>           
-    ##  6 <NA>          34 Male  Philippine~ <NA>         <NA>          <NA>           
-    ##  7 <NA>           4 Fema~ Philippine~ <NA>         <NA>          <NA>           
-    ##  8 <NA>          43 Male  Philippine~ <NA>         <NA>          <NA>           
-    ##  9 <NA>          42 Male  Philippine~ <NA>         <NA>          <NA>           
-    ## 10 <NA>          61 Male  Philippine~ <NA>         <NA>          <NA>           
-    ## # ... with 5,264 more rows, and 29 more variables:
-    ## #   currentmunicipalitycity <chr>, regionpsgc <dbl>, provincepsgc <dbl>,
-    ## #   municipalitycitypsgc <dbl>, dru <chr>, region_dru <dbl>, drucity <chr>,
-    ## #   druprovince <chr>, otherreportingunit <chr>, confirminglab <chr>,
-    ## #   comorbidity <chr>, specifycomorbidity <chr>, fever <chr>, cough <chr>,
-    ## #   cold <chr>, sorethroat <chr>, difficultyofbreathing <chr>, diarrhea <chr>,
-    ## #   none <chr>, othersignssymptomsspecify <chr>, onset_date <chr>,
-    ## #   admitted_date <chr>, specimen_date <chr>,
-    ## #   datespecimenreceivedbylaboratory <chr>, result_date <chr>,
-    ## #   discharged_date <chr>, recovered_date <chr>, died_date <chr>,
-    ## #   quarantined <chr>
+    ## [1] 5274
 
 \~5.3k rows without data
 
@@ -852,41 +768,19 @@ june6 %>%
 
 ``` r
 june5 %>%
-        anti_join(june7_combined, by = c('casenumber'))
+        anti_join(june7_combined, by = c('casenumber')) %>%
+        nrow(.)
 ```
 
-    ## # A tibble: 0 x 36
-    ## # ... with 36 variables: casenumber <chr>, age <dbl>, sex <chr>,
-    ## #   nationality <chr>, healthstatus <chr>, currentregion <chr>,
-    ## #   currentprovince <chr>, currentmunicipalitycity <chr>, regionpsgc <dbl>,
-    ## #   provincepsgc <dbl>, municipalitycitypsgc <dbl>, dru <chr>,
-    ## #   region_dru <dbl>, otherreportingunit <chr>, confirminglab <chr>,
-    ## #   comorbidity <chr>, specifycomorbidity <chr>, fever <chr>, cough <chr>,
-    ## #   cold <chr>, sorethroat <chr>, difficultyofbreathing <chr>, diarrhea <chr>,
-    ## #   none <chr>, othersignssymptomsspecify <chr>, onset_date <chr>,
-    ## #   admitted_date <chr>, specimen_date <chr>,
-    ## #   datespecimenreceivedbylaboratory <chr>, result_date <chr>,
-    ## #   discharged_date <chr>, recovered_date <chr>, died_date <chr>,
-    ## #   quarantined <chr>, drucity <lgl>, druprovince <lgl>
+    ## [1] 0
 
 ``` r
 june6 %>%
-        anti_join(june7_combined, by = c('casenumber'))
+        anti_join(june7_combined, by = c('casenumber')) %>%
+        nrow(.)
 ```
 
-    ## # A tibble: 0 x 36
-    ## # ... with 36 variables: casenumber <chr>, age <dbl>, sex <chr>,
-    ## #   nationality <chr>, healthstatus <chr>, currentregion <chr>,
-    ## #   currentprovince <chr>, currentmunicipalitycity <chr>, regionpsgc <dbl>,
-    ## #   provincepsgc <dbl>, municipalitycitypsgc <dbl>, dru <chr>,
-    ## #   region_dru <dbl>, drucity <chr>, druprovince <chr>,
-    ## #   otherreportingunit <chr>, confirminglab <chr>, comorbidity <chr>,
-    ## #   specifycomorbidity <chr>, fever <chr>, cough <chr>, cold <chr>,
-    ## #   sorethroat <chr>, difficultyofbreathing <chr>, diarrhea <chr>, none <chr>,
-    ## #   othersignssymptomsspecify <chr>, onset_date <chr>, admitted_date <chr>,
-    ## #   specimen_date <chr>, datespecimenreceivedbylaboratory <chr>,
-    ## #   result_date <chr>, discharged_date <chr>, recovered_date <chr>,
-    ## #   died_date <chr>, quarantined <chr>
+    ## [1] 0
 
 Looking at case number alone, all data from June 5 and June6 were
 already at the june7 combined data
@@ -894,32 +788,23 @@ already at the june7 combined data
 ``` r
 june6 %>%
         anti_join(june7_combined) %>%
-        filter(is.na(casenumber))
+        filter(is.na(casenumber)) %>%
+        head(10) %>%
+        kable()
 ```
 
-    ## # A tibble: 517 x 36
-    ##    casenumber   age sex   nationality healthstatus currentregion currentprovince
-    ##    <chr>      <dbl> <chr> <chr>       <chr>        <chr>         <chr>          
-    ##  1 <NA>          47 Male  Philippine~ <NA>         Unknown       <NA>           
-    ##  2 <NA>          44 Fema~ Philippine~ <NA>         Unknown       <NA>           
-    ##  3 <NA>          30 Male  Philippine~ <NA>         <NA>          <NA>           
-    ##  4 <NA>          41 Fema~ Philippine~ <NA>         <NA>          <NA>           
-    ##  5 <NA>          33 Male  Philippine~ <NA>         <NA>          <NA>           
-    ##  6 <NA>          57 Male  Philippine~ <NA>         <NA>          <NA>           
-    ##  7 <NA>          31 Male  Philippine~ <NA>         <NA>          <NA>           
-    ##  8 <NA>          36 Fema~ Philippine~ <NA>         <NA>          <NA>           
-    ##  9 <NA>          26 Male  Philippine~ <NA>         <NA>          <NA>           
-    ## 10 <NA>          29 Male  Philippine~ <NA>         <NA>          <NA>           
-    ## # ... with 507 more rows, and 29 more variables: currentmunicipalitycity <chr>,
-    ## #   regionpsgc <dbl>, provincepsgc <dbl>, municipalitycitypsgc <dbl>,
-    ## #   dru <chr>, region_dru <dbl>, drucity <chr>, druprovince <chr>,
-    ## #   otherreportingunit <chr>, confirminglab <chr>, comorbidity <chr>,
-    ## #   specifycomorbidity <chr>, fever <chr>, cough <chr>, cold <chr>,
-    ## #   sorethroat <chr>, difficultyofbreathing <chr>, diarrhea <chr>, none <chr>,
-    ## #   othersignssymptomsspecify <chr>, onset_date <chr>, admitted_date <chr>,
-    ## #   specimen_date <chr>, datespecimenreceivedbylaboratory <chr>,
-    ## #   result_date <chr>, discharged_date <chr>, recovered_date <chr>,
-    ## #   died_date <chr>, quarantined <chr>
+| casenumber | age | sex    | nationality          | healthstatus | currentregion | currentprovince | currentmunicipalitycity | regionpsgc | provincepsgc | municipalitycitypsgc | dru                          | region_dru | drucity     | druprovince                           | otherreportingunit | confirminglab               | comorbidity | specifycomorbidity | fever | cough | cold | sorethroat | difficultyofbreathing | diarrhea | none | othersignssymptomsspecify | onset_date | admitted_date | specimen_date | datespecimenreceivedbylaboratory | result_date | discharged_date | recovered_date | died_date | quarantined |
+|:-----------|----:|:-------|:---------------------|:-------------|:--------------|:----------------|:------------------------|-----------:|-------------:|---------------------:|:-----------------------------|-----------:|:------------|:--------------------------------------|:-------------------|:----------------------------|:------------|:-------------------|:------|:------|:-----|:-----------|:----------------------|:---------|:-----|:--------------------------|:-----------|:--------------|:--------------|:---------------------------------|:------------|:----------------|:---------------|:----------|:------------|
+| NA         |  47 | Male   | Philippine, Filipino | NA           | Unknown       | NA              | NA                      |         NA |           NA |                   NA | SAN LAZARO HOSPITAL          |         13 | Quezon city | NCR, Second District (not a province) | NA                 | SAN LAZARO HOSPITAL         | NA          | NA                 | NA    | yes   | NA   | NA         | yes                   | NA       | NA   | NA                        | 5/2/2020   | 5/8/2020      | 5/8/2020      | 5/9/2020                         | 5/12/2020   | NA              | NA             | NA        | NA          |
+| NA         |  44 | Female | Philippine, Filipino | NA           | Unknown       | NA              | NA                      |         NA |           NA |                   NA | SAN LAZARO HOSPITAL          |         13 | Quezon city | NCR, Second District (not a province) | NA                 | SAN LAZARO HOSPITAL         | NA          | NA                 | NA    | NA    | NA   | yes        | NA                    | NA       | NA   | NA                        | 5/6/2020   | NA            | 5/9/2020      | 5/9/2020                         | 5/12/2020   | NA              | NA             | NA        | NA          |
+| NA         |  30 | Male   | Philippine, Filipino | NA           | NA            | NA              | NA                      |         NA |           NA |                   NA | PCG                          |         NA | NA          | NA                                    | NA                 | PHILIPPINES RED CROSS       | NA          | NA                 | NA    | NA    | NA   | NA         | NA                    | NA       | NA   | NA                        | NA         | NA            | 4/5/2020      | NA                               | NA          | NA              | NA             | NA        | Yes         |
+| NA         |  41 | Female | Philippine, Filipino | NA           | NA            | NA              | NA                      |         NA |           NA |                   NA | PHILIPPINE COAST GUARD - OFW |         NA | NA          | NA                                    | NA                 | PHILIPPINES RED CROSS       | NA          | NA                 | NA    | NA    | NA   | NA         | NA                    | NA       | NA   | NA                        | NA         | NA            | 5/4/2020      | NA                               | NA          | NA              | NA             | NA        | Yes         |
+| NA         |  33 | Male   | Philippine, Filipino | NA           | NA            | NA              | NA                      |         NA |           NA |                   NA | QUARANTINE FACILITY          |         NA | NA          | NA                                    | NA                 | PHILIPPINE RED CROSS - PLMC | NA          | NA                 | NA    | NA    | NA   | NA         | NA                    | NA       | NA   | NA                        | NA         | NA            | 5/16/2020     | 5/18/2020                        | 5/18/2020   | NA              | NA             | NA        | NA          |
+| NA         |  57 | Male   | Philippine, Filipino | NA           | NA            | NA              | NA                      |         NA |           NA |                   NA | PCG                          |         NA | NA          | NA                                    | NA                 | NA                          | NA          | NA                 | NA    | NA    | NA   | NA         | NA                    | NA       | NA   | NA                        | NA         | NA            | NA            | NA                               | NA          | NA              | NA             | NA        | NA          |
+| NA         |  31 | Male   | Philippine, Filipino | NA           | NA            | NA              | NA                      |         NA |           NA |                   NA | PCG OFW                      |         NA | NA          | NA                                    | NA                 | PHILIPPINES RED CROSS       | NA          | NA                 | NA    | NA    | NA   | NA         | NA                    | NA       | NA   | NA                        | NA         | NA            | 5/8/2020      | 5/17/2020                        | 5/18/2020   | NA              | NA             | NA        | NA          |
+| NA         |  36 | Female | Philippine, Filipino | NA           | NA            | NA              | NA                      |         NA |           NA |                   NA | ONE TAGAYTAY                 |         NA | NA          | NA                                    | NA                 | PHILIPPINES RED CROSS       | NA          | NA                 | NA    | NA    | NA   | NA         | NA                    | NA       | NA   | NA                        | 5/28/2020  | NA            | 5/4/2020      | 5/21/2020                        | NA          | NA              | NA             | NA        | NA          |
+| NA         |  26 | Male   | Philippine, Filipino | NA           | NA            | NA              | NA                      |         NA |           NA |                   NA | PCG                          |         NA | NA          | NA                                    | NA                 | PHILIPPINES RED CROSS       | NA          | NA                 | NA    | NA    | NA   | NA         | NA                    | NA       | NA   | NA                        | NA         | NA            | 4/5/2020      | 4/5/2020                         | NA          | NA              | NA             | NA        | Yes         |
+| NA         |  29 | Male   | Philippine, Filipino | NA           | NA            | NA              | NA                      |         NA |           NA |                   NA | PHILIPPINE COAST GUARD - OFW |         NA | NA          | NA                                    | NA                 | PHILIPPINES RED CROSS       | NA          | NA                 | NA    | NA    | NA   | NA         | NA                    | NA       | NA   | NA                        | NA         | NA            | 4/5/2020      | NA                               | NA          | NA              | NA             | NA        | Yes         |
 
 However there are cases like this where there is no case number to
 anchor the search. It may be possible that these patients were already
@@ -951,6 +836,57 @@ all_entries = bind_rows(june7_combined, assumed_june5_patients, assumed_june6_pa
 all_entries = all_entries %>%
         distinct()
 ```
+
+Check
+
+``` r
+all_entries %>%
+        anti_join(june7_combined) %>%
+         map_dbl(function(x) sum(is.na(x)/ length(x))) %>%
+        as.data.frame() %>%
+        rename(percent_missing = '.') %>%
+        arrange(percent_missing)
+```
+
+    ##                                  percent_missing
+    ## age                                   0.00000000
+    ## sex                                   0.00000000
+    ## nationality                           0.00000000
+    ## confirminglab                         0.08571429
+    ## specimen_date                         0.14285714
+    ## result_date                           0.25714286
+    ## dru                                   0.28571429
+    ## datespecimenreceivedbylaboratory      0.34285714
+    ## currentregion                         0.48571429
+    ## regionpsgc                            0.48571429
+    ## currentprovince                       0.51428571
+    ## provincepsgc                          0.51428571
+    ## currentmunicipalitycity               0.60000000
+    ## municipalitycitypsgc                  0.60000000
+    ## region_dru                            0.74285714
+    ## onset_date                            0.82857143
+    ## admitted_date                         0.85714286
+    ## healthstatus                          0.88571429
+    ## comorbidity                           0.88571429
+    ## fever                                 0.88571429
+    ## othersignssymptomsspecify             0.88571429
+    ## drucity                               0.91428571
+    ## druprovince                           0.91428571
+    ## cough                                 0.91428571
+    ## difficultyofbreathing                 0.91428571
+    ## quarantined                           0.91428571
+    ## none                                  0.94285714
+    ## discharged_date                       0.97142857
+    ## casenumber                            1.00000000
+    ## otherreportingunit                    1.00000000
+    ## specifycomorbidity                    1.00000000
+    ## cold                                  1.00000000
+    ## sorethroat                            1.00000000
+    ## diarrhea                              1.00000000
+    ## recovered_date                        1.00000000
+    ## died_date                             1.00000000
+
+Almost same percentage of missing data
 
 # Clean some data
 
@@ -1093,8 +1029,10 @@ all_entries %>%
 
 There are few typos in result date. Try to fix
 
-Remove the 1970 entry Change the last digit to 2020 If the date is
-greater than August, use day-month-year format instead
+-   Remove the 1970 entry
+-   Change the last digit to 2020
+-   If the date is greater than August, use day-month-year format
+    instead
 
 ``` r
 all_entries = all_entries %>%
